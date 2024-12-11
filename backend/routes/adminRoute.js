@@ -11,4 +11,4 @@ adminRouter.post('/login', loginAdmin)
 adminRouter.post('/all-doctors', authadmin ,allDoctors)
 adminRouter.post('/change-availablity', authadmin ,changeAvailablity)
  
-export default adminRouter
+export default adminRouter  

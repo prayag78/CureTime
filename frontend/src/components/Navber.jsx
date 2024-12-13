@@ -9,7 +9,7 @@ const Navber = () => {
   const[showMe , setshowMe] = useState(false);
   //const[token , setToken] = useState(true)  
 
-  const {token , setToken} = useContext(AppContext)
+  const {token , setToken , userData} = useContext(AppContext)
 
   const logout = () =>{
     setToken('')
@@ -42,9 +42,9 @@ const Navber = () => {
         </ul>
         <div>
         {
-          token ? 
+          token && userData ? 
           <div className='flex items-center gap-2 cursor-pointer group relative'>
-            <img className='w-8 rounded-full' src={assets.profile_pic}/>
+            <img className='w-8 rounded-full' src={userData.image}/>
             <img className='w-2.5' src={assets.dropdown_icon}/>
 
             <div className='absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block'>

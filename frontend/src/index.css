@@ -13,3 +13,24 @@
 ::-webkit-scrollbar{
     @apply hidden
 }
+
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.scroller-inner {
+    display: flex;
+    gap: 1rem;
+    animation: scroll 20s linear infinite;
+}
+
+.scroller {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+}

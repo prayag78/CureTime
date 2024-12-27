@@ -7,7 +7,6 @@ const Navber = () => {
   const navigate = useNavigate();
 
   const[showMe , setshowMe] = useState(false);
-  //const[token , setToken] = useState(true)  
 
   const {token , setToken , userData} = useContext(AppContext)
 
@@ -18,14 +17,14 @@ const Navber = () => {
   }
 
   return (
-    <div className='flex items-center justify-between text-sm py-4 mb-5 border-b border-b-gray-300'>
+    <div className='flex items-center justify-between text-sm py-2 mb-5 border-b border-b-gray-300'>
         <NavLink to='/'>
-        <img className='w-44 cursor-pointer' src={assets.logo}/>
+        <img className='w-40 cursor-pointer' src={assets.CT_logo}/>
         </NavLink>
-        <ul className='hidden md:flex items-start gap-5 font-medium'>
+        <ul className='hidden md:flex items-start gap-16 font-medium text-lg'>
           <NavLink to='/'>
-            <li className='py-1' >Home</li>
-            <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden'/>
+            <li className='py-1 ' >Home</li>
+            <hr className='border-none outline-none h-0.5 bg-primary w-9/12 m-auto hidden'/>
           </NavLink>
           <NavLink to='/doctors'>
             <li className='py-1' >All Doctors</li>

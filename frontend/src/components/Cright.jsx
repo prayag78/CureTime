@@ -5,7 +5,7 @@ const Cright = () => {
     <div>
       <hr />
       <p className="py-5 text-sm text-center">
-        Copyright 2024 @ EasyCure - All Right Reserved.
+        Copyright 2024 @ CureTime - All Right Reserved.
       </p>
     </div>
   );

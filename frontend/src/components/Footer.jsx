@@ -1,12 +1,17 @@
 import React from "react";
 import { assets } from "../assets/assets";
+import { motion } from "framer-motion";
 
 const Footer = () => {
   return (
     <div className="md:mt-14">
-      <div className="flex flex-col justify-center sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-14 text-sm">
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        className="flex flex-col justify-center sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-14 text-sm"
+      >
         <div>
-          <img className="mb-5 w-40" src={assets.logo} />
+          <img className="mb-3 w-40" src={assets.CT_logo} />
           <p className="w-full md:w-2/3 text-gray-600 leading-6">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
@@ -29,7 +34,7 @@ const Footer = () => {
             <li>greatstackdev@gmail.com</li>
           </ul>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

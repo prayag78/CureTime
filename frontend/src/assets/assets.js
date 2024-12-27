@@ -5,6 +5,8 @@ import profile_pic from './profile_pic.png'
 import contact_image from './contact_image.png'
 import about_image from './about_image.png'
 import logo from './logo.svg'
+import curetime_logo from './curetime_logo.svg'
+import CT_logo from './CT_logo.svg'
 import dropdown_icon from './dropdown_icon.svg'
 import menu_icon from './menu_icon.svg'
 import cross_icon from './cross_icon.png'
@@ -36,6 +38,9 @@ import General_physician from './General_physician.svg'
 import Gynecologist from './Gynecologist.svg'
 import Neurologist from './Neurologist.svg'
 import Pediatricians from './Pediatricians.svg'
+import hero_img1 from './heroImg1.jpg'
+import hero_img2 from './heroImg2.jpg'
+import hero_img3 from './heroImg3.jpg'
 
 
 export const assets = {
@@ -43,6 +48,8 @@ export const assets = {
     header_img,
     group_profiles,
     logo,
+    curetime_logo,
+    CT_logo,
     chats_icon,
     verified_icon,
     info_icon,
@@ -56,6 +63,12 @@ export const assets = {
     upload_icon,
     stripe_logo,
     razorpay_logo
+}
+
+export const heroSecImg = {
+    hero_img1,
+    hero_img2,
+    hero_img3
 }
 
 export const specialityData = [

@@ -225,7 +225,10 @@ const listAppointment = async (req, res) => {
     try {
 
         const { userId } = req.body
-        const appointments = await appointmentModel.find({ userId })
+        if (typeof userId !== "string") {
+            return res.status(400).json({ success: false, message: "Invalid userId" });
+        }
+        const appointments = await appointmentModel.find({ userId: { $eq: userId } })
 
         res.json({ success: true, appointments })
 

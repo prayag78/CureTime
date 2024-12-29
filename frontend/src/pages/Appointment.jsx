@@ -5,6 +5,7 @@ import { assets } from '../assets/assets'
 import RelatedDoctors from '../components/RelatedDoctors'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import Loader from '../components/Loader'
 
 const Appointment = () => {
 
@@ -16,6 +17,7 @@ const Appointment = () => {
     const [docSlots, setDocSlots] = useState([])
     const [slotIndex, setSlotIndex] = useState(0)
     const [slotTime, setSlotTime] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const navigate = useNavigate()
 
@@ -86,6 +88,7 @@ const Appointment = () => {
     }
 
     const bookAppointment = async () => {
+        setLoading(true)
 
         if (!token) {
             toast.warning('Login to book appointment')
@@ -101,6 +104,7 @@ const Appointment = () => {
         const slotDate = day + "_" + month + "_" + year
 
         try {
+            await new Promise(resolve => setTimeout(resolve, 3000));
 
             const { data } = await axios.post(backendUrl + '/api/user/book-appointment', { docId, slotDate, slotTime }, { headers: { token } })
             if (data.success) {
@@ -114,6 +118,8 @@ const Appointment = () => {
         } catch (error) {
             console.log(error)
             toast.error(error.message)
+        } finally{
+            setLoading(false)
         }
 
     }
@@ -135,6 +141,7 @@ const Appointment = () => {
 
             {/* ---------- Doctor Details ----------- */}
             <div className='flex flex-col sm:flex-row gap-4'>
+            {loading && <Loader />}
                 <div>
                     <img className='bg-primary w-full sm:max-w-72 rounded-lg' src={docInfo.image} alt="" />
                 </div>

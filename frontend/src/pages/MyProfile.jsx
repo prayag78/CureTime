@@ -3,18 +3,21 @@ import { AppContext } from '../context/AppContext'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { assets } from '../assets/assets'
+import Loader from '../components/Loader'; // Import your Loader component
 
 const MyProfile = () => {
 
     const [isEdit, setIsEdit] = useState(false)
 
-    const [image, setImage] = useState(false)
+    const [image, setImage] = useState(null)
+
+    const [loading, setLoading] = useState(false); // State to manage loading
 
     const { token, backendUrl, userData, setUserData, loadUserProfileData } = useContext(AppContext)
 
     // Function to update user profile data using API
     const updateUserProfileData = async () => {
-
+        setLoading(true); // Start loading
         try {
 
             const formData = new FormData();
@@ -25,7 +28,9 @@ const MyProfile = () => {
             formData.append('gender', userData.gender)
             formData.append('dob', userData.dob)
 
-            image && formData.append('image', image)
+            if (image) {
+                formData.append('image', image);
+            }
 
             const { data } = await axios.post(backendUrl + '/api/user/update-profile', formData, { headers: { token } })
 
@@ -33,7 +38,7 @@ const MyProfile = () => {
                 toast.success(data.message)
                 await loadUserProfileData()
                 setIsEdit(false)
-                setImage(false)
+                setImage(null)
             } else {
                 toast.error(data.message)
             }
@@ -41,12 +46,15 @@ const MyProfile = () => {
         } catch (error) {
             console.log(error)
             toast.error(error.message)
+        } finally {
+            setLoading(false); // Stop loading
         }
 
     }
 
     return userData ? (
         <div className='max-w-lg h-[80vh] flex flex-col gap-2 text-sm pt-5'>
+            {loading && <Loader />}
 
             {isEdit
                 ? <label htmlFor='image' >

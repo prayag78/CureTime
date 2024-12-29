@@ -5,6 +5,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { assets } from '../assets/assets'
 import { motion, AnimatePresence } from 'framer-motion'
+import Loader from '../components/Loader'
 
 const MyAppointments = () => {
 
@@ -14,6 +15,7 @@ const MyAppointments = () => {
     const [appointments, setAppointments] = useState([])
     const [payment, setPayment] = useState('')
     const [removedAppointments, setRemovedAppointments] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const months = [" ","Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
@@ -38,10 +40,11 @@ const MyAppointments = () => {
 
     // Function to cancel appointment Using API
     const cancelAppointment = async (appointmentId) => {
-      console.log(appointmentId);
+      setLoading(true)
       
-
         try {
+
+            await new Promise(resolve => setTimeout(resolve, 3000));
 
             const { data } = await axios.post(backendUrl + '/api/user/cancel-appointment', { appointmentId }, { headers: { token } })
 
@@ -56,6 +59,8 @@ const MyAppointments = () => {
         } catch (error) {
             console.log(error)
             toast.error(error.message)
+        }finally{
+            setLoading(false)
         }
 
     }
@@ -82,8 +87,9 @@ const MyAppointments = () => {
     const filteredAppointments = appointments.filter(app => !removedAppointments.includes(app._id));
 
     return (
-        <div>
-            <p className='pb-3 mt-12 text-lg font-medium text-gray-600 border-b'>My appointments</p>
+        <div className='h-[100vh] overflow-scroll p-4'>
+            <p className='pb-3  text-lg font-medium text-gray-600 border-b'>My appointments</p>
+            {loading && <Loader />}
             <div className=''>
                 <AnimatePresence>
                     {filteredAppointments.map((item, index) => (

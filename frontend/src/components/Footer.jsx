@@ -31,7 +31,7 @@ const Footer = () => {
           <p className="text-xl mb-5 font-medium">GET IN TOUCH</p>
           <ul className="text-gray-600 flex flex-col gap-2">
             <li>+0-000-000-000</li>
-            <li>curetime@gmail.com</li>
+            <li>greatstackdev@gmail.com</li>
           </ul>
         </div>
       </motion.div>

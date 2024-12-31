@@ -19,10 +19,6 @@ const AddDoctor = () => {
     const [address2 , setAddress2] = useState('')
 
     const {backendUrl, aToken} = useContext(AdminContext)
-   // const backendUrl = import.meta.env.VITE_BACKEND_URL;
-
-    console.log(backendUrl)
-    console.log(aToken)
 
 
     const onSubmitHandler = async (event) =>{

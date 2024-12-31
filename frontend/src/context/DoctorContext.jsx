@@ -7,8 +7,7 @@ export const DoctorContext = createContext();
 const DoctorContextProvider = (props) => {
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const [dToken, setDToken] = useState(
-    localStorage.getItem("dToken") ? localStorage.getItem("dToken") : ""
-  );
+    localStorage.getItem("dToken") ? localStorage.getItem("dToken") : "");
 
   const [appointments, setAppointments] = useState([]);
 
@@ -84,9 +83,7 @@ const DoctorContextProvider = (props) => {
   // Getting Doctor dashboard data using API
   const getDashData = async () => {
     try {
-      const { data } = await axios.get(backendUrl + "/api/doctor/dashboard", {
-        headers: { dToken },
-      });
+      const { data } = await axios.get(backendUrl + "/api/doctor/dashboard", {headers: { dToken } });
 
       if (data.success) {
         setDashData(data.dashData);
@@ -99,19 +96,19 @@ const DoctorContextProvider = (props) => {
     }
   };
 
-      // Getting Doctor profile data from Database using API
-      const getProfileData = async () => {
-        try {
+  // Getting Doctor profile data from Database using API
+  const getProfileData = async () => {
+    try {
 
-            const { data } = await axios.get(backendUrl + '/api/doctor/profile', { headers: { dToken } })
-            console.log(data.profileData)
-            setProfileData(data.profileData)
+        const { data } = await axios.get(backendUrl + '/api/doctor/profile', { headers: { dToken } })
+        console.log(data.profileData)
+        setProfileData(data.profileData)
 
-        } catch (error) {
-            console.log(error)
-            toast.error(error.message)
-        }
+    } catch (error) {
+        console.log(error)
+        toast.error(error.message)
     }
+}
 
   const value = {
     dToken,

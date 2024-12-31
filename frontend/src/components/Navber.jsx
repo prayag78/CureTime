@@ -13,7 +13,7 @@ const Navber = () => {
   const logout = () =>{
     setToken('')
     localStorage.removeItem('token')
-    navigate('/login')
+    navigate('/userlogin')
   }
 
   return (
@@ -23,11 +23,11 @@ const Navber = () => {
         </NavLink>
         <ul className='hidden md:flex items-start gap-16 font-medium text-lg'>
           <NavLink to='/'>
-            <li className='py-1 ' >Home</li>
+            <li className='py-1'>Home</li>
             <hr className='border-none outline-none h-0.5 bg-primary w-9/12 m-auto hidden'/>
           </NavLink>
           <NavLink to='/doctors'>
-            <li className='py-1' >All Doctors</li>
+            <li className='py-1'>All Doctors</li>
             <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden'/>
           </NavLink>
           <NavLink to='about'>
@@ -56,7 +56,7 @@ const Navber = () => {
             </div>
 
           </div> :
-          <button onClick={()=>navigate('/login')} className='bg-primary text-white px-8 py-3 rounded-full font-light hidden md:block '>Create Account</button>
+          <button onClick={()=>navigate('/Userlogin')} className='bg-primary text-white px-8 py-3 rounded-full font-light hidden md:block '>Create Account</button>
 
         }
         </div>

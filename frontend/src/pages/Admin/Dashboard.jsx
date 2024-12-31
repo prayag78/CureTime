@@ -1,13 +1,13 @@
 import React, { useContext, useEffect } from 'react'
 import { assets } from '../../assets/assets'
 import { AdminContext } from '../../context/AdminContext'
+import { DoctorContext } from '../../context/DoctorContext'
 import { AppContext } from '../../context/AppContext'
 
 const Dashboard = () => {
 
   const { aToken  , getDashData, cancelAppointment, dashData } = useContext(AdminContext)
   const { slotDateFormat } = useContext(AppContext)
-  console.log(dashData);
   
 
   useEffect(() => {

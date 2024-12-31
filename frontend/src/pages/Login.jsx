@@ -1,124 +1,130 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { AppContext } from '../context/AppContext'
-import axios from 'axios'
-import { toast } from 'react-toastify'
-import { useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import axios from "axios";
+import React, { useContext, useState } from "react";
+import { DoctorContext } from "../context/DoctorContext";
+import { AdminContext } from "../context/AdminContext";
+import { toast } from "react-toastify";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [state, setState] = useState('Sign Up')
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [state, setState] = useState("Doctor");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const navigate = useNavigate()
-  const { backendUrl, token, setToken } = useContext(AppContext)
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const { setDToken } = useContext(DoctorContext);
+  const { setAToken } = useContext(AdminContext);
+  const navigate = useNavigate(); // Initialize navigate
 
   const onSubmitHandler = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
     try {
-      let data
-      if (state === 'Sign Up') {
-        const response = await axios.post(backendUrl + '/api/user/register', { name, email, password })
-        data = response.data
-      } else {
-        const response = await axios.post(backendUrl + '/api/user/login', { email, password })
-        data = response.data
-      }
+      if (state === "Admin") {
+        const { data } = await axios.post(backendUrl + "/api/admin/login", {
+          email,
+          password,
+        });
+        if (data.success) {
+          //console.log(data.token)
+          setAToken(data.token);
+          localStorage.setItem("aToken", data.token);
 
-      if (data.success) {
-        localStorage.setItem('token', data.token)
-        setToken(data.token)
-        toast.success('Login Success!')
+          navigate("/admin-dashboard"); // Redirect to '/dashboard' after successful login
+        } else {
+          toast.error(data.message);
+        }
       } else {
-        toast.error(data.message)
-      }
+        const { data } = await axios.post(backendUrl + "/api/doctor/login", {
+          email,
+          password,
+        });
 
+        if (data.success) {
+          console.log(data.token);
+          setDToken(data.token);
+          localStorage.setItem("dToken", data.token);
+
+          navigate("/admin-dashboard");
+        } else {
+          toast.error(data.message);
+        }
+      }
     } catch (error) {
-      toast.error('Something went wrong. Please try again!')
+      toast.error(error.message);
     }
-  }
+  };
 
-  useEffect(() => {
-    if (token) {
-      navigate('/')
-    }
-  }, [token])
+  const logout = () => {
+    navigate("/userlogin");
+    aToken && setAToken("");
+    aToken && localStorage.removeItem("aToken");
+    dToken && setDToken("");
+    dToken && localStorage.removeItem("dToken");
+  };
 
   return (
-    <div className="flex items-center justify-center h-[80vh]">
-      <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl min-h-[500px] relative overflow-hidden"> 
-        
-        {/* Form Container */}
-        <motion.div
-          className={`absolute w-1/2 h-full flex flex-col items-center justify-center ${state === 'Sign Up' ? 'right-0' : 'left-0'}`}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-        >
-          <form 
-            onSubmit={onSubmitHandler} 
-            className="bg-white flex flex-col items-center justify-center p-6 h-full text-center w-full"
-          >
-            <h1 className="font-bold text-2xl mb-4">{state === 'Sign Up' ? 'Sign Up' : 'Sign In'}</h1>
-            {state === 'Sign Up' && (
-              <input
-                type="text"
-                placeholder="Full Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="bg-gray-200 border-none p-3 my-2 w-full rounded"
-                required
-              />
-            )}
+    <div>
+      <form
+        onSubmit={onSubmitHandler}
+        className="min-h-[80vh] flex items-center"
+      >
+        <div className="flex flex-col gap-3 m-auto items-start p-8 min-w-[340px] sm:min-w-96 border rounded-xl text-[#5E5E5E] text-sm shadow-lg">
+          <p className="text-2xl font-semibold m-auto">
+            <span className="text-primary">{state}</span> Login
+          </p>
+          <div className="w-full ">
+            <p>Email</p>
             <input
-              type="email"
-              placeholder="Email"
-              value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="bg-gray-200 border-none p-3 my-2 w-full rounded"
+              value={email}
+              className="border border-[#DADADA] rounded w-full p-2 mt-1"
+              type="email"
               required
             />
+          </div>
+          <div className="w-full ">
+            <p>Password</p>
             <input
-              type="password"
-              placeholder="Password"
-              value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="bg-gray-200 border-none p-3 my-2 w-full rounded"
+              value={password}
+              className="border border-[#DADADA] rounded w-full p-2 mt-1"
+              type="password"
               required
             />
-            <button
-              type="submit"
-              className="rounded-full bg-primary text-white py-2 px-8 uppercase tracking-wider mt-4"
-            >
-              {state === 'Sign Up' ? 'Sign Up' : 'Sign In'}
-            </button>
-
-          </form>
-        </motion.div>
-
-        {/* Switch Button */}
-        <motion.div
-          className="absolute flex flex-col top-0 items-center justify-center p-6 h-full w-1/2 text-center bg-primary transition-transform duration-500"
-          initial={{ x: 0 }}
-          animate={{ x: state === 'Sign Up' ? '0%' : '100%' }}
-          transition={{ duration: 0.1 }}
-          style={{ zIndex: 10 }}
-        >
-          <h1 className="text-white font-bold text-2xl">
-            {state === 'Sign Up' ? 'Already have an account?' : "Don't have an account?"}
-          </h1>
-          <button
-            className="rounded-full bg-white font-bold text-gray-800 py-2 px-8 uppercase tracking-wider mt-4"
-            onClick={() => setState(state === 'Sign Up' ? 'Login' : 'Sign Up')}
-          >
-            {state === 'Sign Up' ? 'Sign In' : 'Sign Up'}
+          </div>
+          <button className="bg-primary text-white w-full py-2 rounded-md text-base">
+            Login
           </button>
-        </motion.div>
-      </div>
-    </div>
-  )
-}
 
-export default Login
+          {state === "Admin" ? (
+            <p>
+              Doctor Login?{" "}
+              <span
+                onClick={() => setState("Doctor")}
+                className="text-primary underline cursor-pointer"
+              >
+                Click here
+              </span>
+            </p>
+          ) : (
+            <p>
+              Admin Login?{" "}
+              <span
+                onClick={() => setState("Admin")}
+                className="text-primary underline cursor-pointer"
+              >
+                Click here
+              </span>
+            </p>
+          )}
+          <p onClick={logout} >User login ? <span className="text-primary underline cursor-pointer">click here</span></p>
+
+        </div>
+      </form>
+
+
+    </div>
+  );
+};
+
+export default Login;

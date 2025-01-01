@@ -40,7 +40,7 @@ const Login = () => {
         });
 
         if (data.success) {
-          console.log(data.token);
+          
           setDToken(data.token);
           localStorage.setItem("dToken", data.token);
 

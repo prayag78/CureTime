@@ -117,8 +117,7 @@ const UserLogin = () => {
           <div>
             {state === "Sign Up" ? (
               <div>
-                <p className="text-white font-bold text-4xl">Welcome</p>
-                <p className="text-white font-bold text-4xl">Back!</p>
+                <p className="text-white font-bold text-4xl">Welcome Back!</p>
                 <p className="text-white text-sm">To keep connected with us please</p>
                 <p className="text-white text-sm">login with your personal info</p>
               </div>

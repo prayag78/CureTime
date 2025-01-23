@@ -104,7 +104,7 @@ const Appointment = () => {
         const slotDate = day + "_" + month + "_" + year
 
         try {
-            await new Promise(resolve => setTimeout(resolve, 3000));
+            await new Promise(resolve => setTimeout(resolve, 2000));
 
             const { data } = await axios.post(backendUrl + '/api/user/book-appointment', { docId, slotDate, slotTime }, { headers: { token } })
             if (data.success) {

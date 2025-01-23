@@ -19,6 +19,10 @@ const AddDoctor = () => {
     const [address2 , setAddress2] = useState('')
 
     const {backendUrl, aToken} = useContext(AdminContext)
+   // const backendUrl = import.meta.env.VITE_BACKEND_URL;
+
+    console.log(backendUrl)
+    console.log(aToken)
 
 
     const onSubmitHandler = async (event) =>{
@@ -42,9 +46,9 @@ const AddDoctor = () => {
             formData.append('address' , JSON.stringify({line1:address1,line2:address2}))
 
 
-            // formData.forEach((value,key)=>{
-            //     console.log(`${key} : ${value}`);
-            // })
+            formData.forEach((value,key)=>{
+                console.log(`${key} : ${value}`);
+            })
 
             const {data} = await axios.post(backendUrl + '/api/admin/add-doctor',formData,{headers:{aToken}})
 

@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { DoctorContext } from "../context/DoctorContext";
-import { AdminContext } from "../context/AdminContext";
 import { toast } from "react-toastify";
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -12,39 +11,23 @@ const Login = () => {
 
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const { setDToken } = useContext(DoctorContext);
-  const { setAToken } = useContext(AdminContext);
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
 
     try {
-      if (state === "Admin") {
-        const { data } = await axios.post(backendUrl + "/api/admin/login", {
-          email,
-          password,
-        });
-        if (data.success) {
-          //console.log(data.token)
-          setAToken(data.token);
-          localStorage.setItem("aToken", data.token);
-
-          navigate("/admin-dashboard"); // Redirect to '/dashboard' after successful login
-        } else {
-          toast.error(data.message);
-        }
-      } else {
+      if (state === "Doctor") {
         const { data } = await axios.post(backendUrl + "/api/doctor/login", {
           email,
           password,
         });
 
         if (data.success) {
-          
           setDToken(data.token);
           localStorage.setItem("dToken", data.token);
 
-          navigate("/admin-dashboard");
+          navigate("/doctor-dashboard");
         } else {
           toast.error(data.message);
         }
@@ -56,8 +39,6 @@ const Login = () => {
 
   const logout = () => {
     navigate("/userlogin");
-    aToken && setAToken("");
-    aToken && localStorage.removeItem("aToken");
     dToken && setDToken("");
     dToken && localStorage.removeItem("dToken");
   };
@@ -96,33 +77,14 @@ const Login = () => {
             Login
           </button>
 
-          {state === "Admin" ? (
-            <p>
-              Doctor Login?{" "}
-              <span
-                onClick={() => setState("Doctor")}
-                className="text-primary underline cursor-pointer"
-              >
-                Click here
-              </span>
-            </p>
-          ) : (
-            <p>
-              Admin Login?{" "}
-              <span
-                onClick={() => setState("Admin")}
-                className="text-primary underline cursor-pointer"
-              >
-                Click here
-              </span>
-            </p>
-          )}
-          <p onClick={logout} >User login ? <span className="text-primary underline cursor-pointer">click here</span></p>
-
+          <p onClick={logout}>
+            User login ?{" "}
+            <span className="text-primary underline cursor-pointer">
+              click here
+            </span>
+          </p>
         </div>
       </form>
-
-
     </div>
   );
 };

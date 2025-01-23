@@ -6,7 +6,7 @@ import axios from "axios";
 
 const DoctorProfile = () => {
   const { dToken, profileData, setProfileData, getProfileData ,backendUrl } = useContext(DoctorContext);
-  const { currency } = useContext(AppContext);
+  const { currencySymbol } = useContext(AppContext);
   const [isEdit, setIsEdit] = useState(false);
 
   const updateProfile = async () => {
@@ -100,7 +100,7 @@ const DoctorProfile = () => {
             <p className="text-gray-600 font-medium mt-4">
               Appointment fee:{" "}
               <span className="text-gray-800">
-                {currency}{" "}
+                {currencySymbol}{" "}
                 {isEdit ? (
                   <input
                     type="number"

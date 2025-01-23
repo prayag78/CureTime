@@ -7,7 +7,6 @@ export const AppContext = createContext()
 const AppContextProvider = (props) =>{
 
     const currencySymbol = '$'
-    const currency = '$'
     const months = [" ","Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const [doctors,setDoctors] = useState([])
@@ -63,7 +62,7 @@ const AppContextProvider = (props) =>{
 
     const value = {
         doctors,getDoctorsData,
-        currencySymbol,currency,months,
+        currencySymbol,months,
         token,setToken,
         backendUrl,
         userData,setUserData,loadUserProfileData,

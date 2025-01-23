@@ -7,7 +7,7 @@ import { assets } from '../../assets/assets'
 const DoctorAppointments = () => {
 
   const { dToken, appointments, getAppointments, cancelAppointment, completeAppointment } = useContext(DoctorContext)
-  const { slotDateFormat, calculateAge, currency } = useContext(AppContext)
+  const { slotDateFormat, calculateAge, currencySymbol } = useContext(AppContext)
 
   useEffect(() => {
     if (dToken) {
@@ -43,7 +43,7 @@ const DoctorAppointments = () => {
             </div>
             <p className='max-sm:hidden'>{calculateAge(item.userData.dob)}</p>
             <p>{slotDateFormat(item.slotDate)}, {item.slotTime}</p>
-            <p>{currency}{item.amount}</p>
+            <p>{currencySymbol}{item.amount}</p>
             {item.cancelled
               ? <p className='text-red-400 text-xs font-medium'>Cancelled</p>
               : item.isCompleted

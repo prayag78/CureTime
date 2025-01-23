@@ -130,13 +130,13 @@ const UserLogin = () => {
             )}
           </div>
           <button
-            className="rounded-full text-white border-2 border-white py-2 px-8 uppercase tracking-wider mt-4"
+            className="rounded-full text-white border-2 border-white py-2 px-6 uppercase mt-4"
             onClick={() => setState(state === "Sign Up" ? "Login" : "Sign Up")}
           >
             {state === "Sign Up" ? "Sign In" : "Sign Up"}
           </button>
 
-          <p className="text-white mt-2">Doctor Login ? <span onClick={() => navigate("/doc-admin")} className="cursor-pointer underline hover:text-green-500">click here</span></p>
+          <p className="text-white mt-6">Doctor Login ? <span onClick={() => navigate("/doc-login")} className="cursor-pointer underline hover:text-green-500">click here</span></p>
         </motion.div>
       </div>
     </div>
